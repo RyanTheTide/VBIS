@@ -1,10 +1,11 @@
+@echo off
+
 REM - Welcome to the VirtualBox Installer Script for Windows v1.0.
 REM - This script was created by Ryan Murray for TAFENSW ICT courses to simplify the installation of new versions of VirtualBox on Windows 10/11 machines.
 REM - Here's what this script does. First it ensures that the latest version of Python is installed (winget repoistory) and the pywin32 dependency is installed. Then it installs the latest verson of VirtualBox (winget repository) and finally attempts to install the VirtualBox Extention Pack for the installed version. The script also contains a built in logger for the output of the commands ran. This log file is named 'VBIS-log.txt' and can be found in '%localappdata%\temp'.
 REM - Finally a quick warning. As always you should never run any script unless it has been vetted, you understand its purpose and you understand that things can go wrong. In the case of this script the "worst that should" happen is it doesn't work and the log file shows what went wrong. If you have any problems please open an Issue on GitHub (https://github.com/RyanTheTide/VBIS/issues) and attach (or copy the contents of) the log file found at '%localappdata%\temp\VBIS-log.txt'.
 
 REM			Sets terminal to quiet and loads script content as Administrator
-@echo off
 
 title VirtualBox Installer Script for Windows v1.0
 if exist %localappdata%\temp\VBIS-log.txt (
