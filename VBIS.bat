@@ -32,13 +32,21 @@ echo #------ INSTALL LATEST VIRTUALBOX VERSION ------# >> %localappdata%\temp\VB
 powershell write-host -fore Cyan Installing latest Version of VirtualBox...
 winget install virtualbox --silent --accept-source-agreements --accept-package-agreements >> %localappdata%\temp\VBIS-log.txt 2>&1
 echo #------ GET INSTALLED VIRTUALBOX VERSION AND STORE TO VAR ------# >> %localappdata%\temp\VBIS-log.txt 2>&1
-for /f "tokens=1 delims=r" %%a in ('"C:\Program Files\Oracle\VirtualBox\VBoxManage" --version') do set VER=%%a
+if exist "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" (
+	for /f "tokens=1 delims=r" %%a in ('"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" --version') do set VER=%%a
+) else (
+	for /f "tokens=1 delims=r" %%a in ('"D:\Program Files\Oracle\VirtualBox\VBoxManage.exe" --version') do set VER=%%a
+)
 powershell write-host -fore Blue VirtualBox %VER% Installed!
 echo #------ DOWNLOAD LATEST VIRTUALBOX EXTENSION PACK TO TEMP ------# >> %localappdata%\temp\VBIS-log.txt 2>&1
 powershell write-host -fore Cyan Installing VirtualBox Extention Pack...
 powershell Invoke-WebRequest https://download.virtualbox.org/virtualbox/%VER%/Oracle_VirtualBox_Extension_Pack-%VER%.vbox-extpack -OutFile %localappdata%\temp\Oracle_VirtualBox_Extension_Pack-%VER%.vbox-extpack
 echo #------ INSTALL VIRTUALBOX EXTENSION PACK ------# >> %localappdata%\temp\VBIS-log.txt 2>&1
-echo y | "C:\Program Files\Oracle\VirtualBox\VBoxManage" extpack install %localappdata%\temp\Oracle_VirtualBox_Extension_Pack-%VER%.vbox-extpack >> %localappdata%\temp\VBIS-log.txt 2>&1
+if exist "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" (
+	echo y | "C:\Program Files\Oracle\VirtualBox\VBoxManage" extpack install %localappdata%\temp\Oracle_VirtualBox_Extension_Pack-%VER%.vbox-extpack >> %localappdata%\temp\VBIS-log.txt 2>&1
+) else (
+	echo y | "D:\Program Files\Oracle\VirtualBox\VBoxManage" extpack install %localappdata%\temp\Oracle_VirtualBox_Extension_Pack-%VER%.vbox-extpack >> %localappdata%\temp\VBIS-log.txt 2>&1
+)
 powershell write-host -fore Blue Installed VirtualBox %VER% Extention Pack!
 
 echo #------ DELETE THE EXTENSION PACK TEMP FILE ------# >> %localappdata%\temp\VBIS-log.txt 2>&1
